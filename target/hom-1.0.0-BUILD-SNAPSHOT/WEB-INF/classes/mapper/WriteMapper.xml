@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="www.silver.dao.IF_WriteDAO">
+<insert id="insertwrite" parameterType="www.silver.VO.WriteVO">
+    <selectKey keyProperty="no" resultType="int" order="BEFORE">
+        SELECT bbs_seq.NEXTVAL FROM DUAL
+    </selectKey>
+    insert into write values(#{no},#{title}, #{name} , #{body},sysdate,#{cnt},#{s_flag})
+</insert>
+	<select id="getwritelist" resultType="www.silver.VO.WriteVO">
+        select * from write
+    </select>
+
+    <select id="getwriteNo" parameterType="int" resultType="www.silver.VO.WriteVO">
+        select * from write where no = #{no}
+    </select>
+    <update id="plusWriteCnt" parameterType="int" >
+        update write set cnt = cnt + 1 where no = #{no}
+    </update>
+</mapper>
+
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper  namespace="www.silver.dao.IF_ProductDAO">
+<insert id="addProduct" parameterType="www.silver.VO.ProductVO">
+    insert into product values (#{productName}, #{price},#{pcnt},#{des})
+</insert>
+
+    <select id="checkid" parameterType="String" resultType="www.silver.VO.ProductVO">
+        select * from product where productName = #{name}
+    </select>
+
+
+    <insert id="addsearch" parameterType="www.silver.VO.SearchVO">
+        INSERT INTO search (id, searchName, searchDate)
+        VALUES (search_seq.NEXTVAL, #{searchName}, SYSDATE)
+    </insert>
+
+    <select id="getSearchHistory" resultType="www.silver.VO.SearchVO">
+        select * from search ORDER BY id DESC
+    </select>
+
+</mapper>
