@@ -2,6 +2,7 @@ package www.silver.dao;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import www.silver.VO.FileVO;
 import www.silver.VO.MemberVO;
 
 import javax.inject.Inject;
@@ -26,4 +27,11 @@ public class MemberDAOImpl implements  IF_MemberDAO {
     public MemberVO checkID(String id) {
         return sqlSession.selectOne("www.silver.dao.IF_MemberDAO.checkID", id);
     }
+
+    @Override
+    public void attachFname(FileVO fname) {
+        sqlSession.insert("www.silver.dao.IF_MemberDAO.member_attach",fname);
+    }
+
+
 }

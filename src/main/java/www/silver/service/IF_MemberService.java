@@ -4,7 +4,7 @@ import www.silver.VO.MemberVO;
 
 public interface IF_MemberService {
 
-    void addMember(MemberVO memberVO);
+    void addMember(MemberVO memberVO,String[] fname);
 
     String checkMember(String id);
 

@@ -10,6 +10,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </selectKey>
     insert into write values(#{no},#{title}, #{name} , #{body},sysdate,#{cnt},#{s_flag})
 </insert>
+
+    <insert id="insertWriteImage" parameterType="String">
+        INSERT INTO write_attach (no, filepath)
+        VALUES
+       ((SELECT MAX(no) FROM write), #{file})
+
+    </insert>
+
 	<select id="getwritelist" resultType="www.silver.VO.WriteVO">
         select * from write
     </select>
@@ -20,6 +28,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="plusWriteCnt" parameterType="int" >
         update write set cnt = cnt + 1 where no = #{no}
     </update>
+
+    <select id="getFiles" parameterType="int" resultType="String">
+        select filepath from write_attach where no = #{no}
+    </select>
 </mapper>
 
 

@@ -1,18 +1,15 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: hoyoung
-  Date: 25. 5. 2.
-  Time: 오후 1:46
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>상품등록</title>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- jQuery 추가 (필요 시) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <h3>상품상품</h3>
-<meta charset="UTF-8">
+
 <div>
     <form action="${pageContext.request.contextPath}/insertpro" method="post" accept-charset="UTF-8">
         이름:<input type="text" name="productName">
@@ -22,16 +19,17 @@
         <button type="submit">등록</button>
     </form>
 </div>
-<div>
-    <form action="${pageContext.request.contextPath}/getlist" method="get" accept-charset="UTF-8"   >
-        조회상품: <input type="text" name="name">
-        <button type="submit" onclick="updateSearchHistory()">조회</button>
-    </form>
 
+<div>
+    <form id="searchForm" onsubmit="updateSearchHistory(event);">
+        조회상품: <input type="text" name="name" id="searchInput">
+        <button type="submit" id="searchButton">조회</button>
+    </form>
 </div>
+
 <div>
     <h5>조회상품</h5>
-    <table>
+    <table id="productList" border="1">
         <thead>
         <tr>
             <th>이름</th>
@@ -40,61 +38,72 @@
             <th>설명</th>
         </tr>
         </thead>
-        <tbody id="productList">
-
-        <tr>
-            <td>${product.productName}</td>
-                <td>${product.price}</td>
-                <td>${product.pcnt}</td>
-                <td>${product.des}</td>
-            </tr>
-
-        </tbody>
+        <tbody></tbody>
     </table>
 </div>
 
 <div id="searchHistory">
     <h5>최신 검색어</h5>
-    <ul id="searchHistoryList">
-
-    </ul>
+    <ul id="searchHistoryList"></ul>
 </div>
 
-</body>
-</html>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    function updateSearchHistory(event) {
-        // event가 없는 경우(페이지 로드 시 호출) 처리
-        if (event) {
-            event.preventDefault(); // 폼 제출 기본 동작 중지
-            const name = $('#searchInput').val().trim();
-            if (!name) {
-                alert('조회할 상품명을 입력하세요.');
-                return;
-            }
-            $('#searchForm').submit();
+    async function updateSearchHistory(event) {
+        event.preventDefault();
+        document.getElementById('searchButton').disabled = true;
+        const name = document.getElementById('searchInput').value.trim();
+
+        if (!name) {
+            alert('조회할 상품명을 입력하세요.');
+            document.getElementById('searchButton').disabled = false;
+            return;
         }
 
-        // 비동기적으로 검색어 리스트 갱신
-        $.ajax({
-            url: '${pageContext.request.contextPath}/getSearchHistory',
-            method: 'GET',
-            dataType: 'json',
-            success: function(data) {
+        const productList = document.getElementById('productList').getElementsByTagName('tbody')[0];
 
-                let html = '';
-                data.forEach((item) => {
-                    html += '<li>'+item.searchName +'(검색 시간: '+item.searchDate+') </li>';
-                });
-                $('#searchHistoryList').html(html);
-            },
-            error: function(xhr, status, error) {
-                alert('검색어 로드 실패: ' + error);
+        try {
+            const response = await axios.get('${pageContext.request.contextPath}/getlist', {
+                params: { name: name }
+            });
+
+            productList.innerHTML = '';
+            if (response.data && response.data.productName) {
+                productList.innerHTML = '<tr>' +
+                    '<td>' + response.data.productName + '</td>' +
+                    '<td>' + response.data.price + '</td>' +
+                    '<td>' + response.data.pcnt + '</td>' +
+                    '<td>' + response.data.des + '</td>' +
+                    '</tr>';
+            } else {
+                productList.innerHTML = '<tr><td colspan="4">상품을 찾을 수 없습니다.</td></tr>';
             }
-        });
+        } catch (error) {
+            console.error("Error:", error.response ? error.response.status : error.message);
+            productList.innerHTML = '<tr><td colspan="4">조회 실패: ' + (error.message || '알 수 없는 오류') + '</td></tr>';
+        } finally {
+            document.getElementById('searchButton').disabled = false;
+        }
+
+        const searchHistoryList = document.getElementById('searchHistoryList');
+        try {
+            const response = await axios.get('${pageContext.request.contextPath}/getSearchHistory');
+            let html = '';
+            response.data.forEach(item => {
+                html += '<li>' + item.searchName + ' (검색 시간: ' + item.searchDate + ') </li>';
+            });
+            searchHistoryList.innerHTML = html;
+        } catch (error) {
+            console.error("Error:", error.response ? error.response.status : error.message);
+            searchHistoryList.innerHTML = '<li>검색어 로드 실패: ' + (error.message || '알 수 없는 오류') + '</li>';
+        }
     }
-    $(document).ready(function() {
-        updateSearchHistory(null); // event 없이 호출
-    });
+
+    // jQuery 없이 페이지 로드 시 호출 (필요 시 주석 해제)
+    window.onload = async function() {
+        console.log("이게ㅁㄴㅇㅁㄴㅇ")
+        await updateSearchHistory(null); // 페이지 로드 시 검색 기록 로드
+
+    };
 </script>
+</body>
+</html>

@@ -23,16 +23,15 @@
                 <th>전화번호</th>
                 <th>수정/삭제</th>
             </tr>
-            </thead>
+            </the`1ad>
             <tbody>
             <c:forEach var="member" items="${memberlist}" >
                 <tr>
 
-                    <td><a href="${pageContext.request.contextPath}/view?id=${member.id}">${member.id}</a> </td>
+                    <td><a href="${pageContext.request.contextPath}/viewMember?id=${member.id}">${member.id}</a> </td>
                     <td>${member.pass}</td>
                     <td>${member.name}</td>
-                    <td>${member.addr}</td>
-                    <td>${member.tel}</td>
+
                     <td>
                         <form action="edit" method="post" style="display: inline;">
                             <input type="hidden" name="id" value="${member.id}">

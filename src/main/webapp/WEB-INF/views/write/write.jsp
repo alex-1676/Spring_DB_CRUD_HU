@@ -74,7 +74,7 @@
 <div class="container">
     <h3>글쓰기</h3>
 
-    <form action="${pageContext.request.contextPath}/saveWrite" method="post" accept-charset="UTF-8">
+    <form action="${pageContext.request.contextPath}/saveWrite" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
         <table border="1">
             <tr>
                 <td>제목</td>
@@ -82,7 +82,7 @@
             </tr>
             <tr>
                 <td>ID</td>
-                <td><input type="text" id="name" name="name"></td>
+                <td><input type="text" id="name" name="name" value="${sessionScope.userId}"></td>
             </tr>
             <tr>
                 <td>작성글</td>
@@ -96,6 +96,10 @@
                         <option value="1">비공개</option>
                     </select>
                 </td>
+            </tr>
+            <tr>
+                <td>첨부파일</td>
+                <td><input type="file" name="file" multiple="multiple"></input></td>
             </tr>
             <tr>
                 <td colspan="2">

@@ -1,5 +1,6 @@
 package www.silver.dao;
 
+import www.silver.VO.FileVO;
 import www.silver.VO.MemberVO;
 
 
@@ -9,4 +10,6 @@ public interface IF_MemberDAO {
     String checkMember(String id);
 
     MemberVO checkID(String id);
+
+    void attachFname(FileVO fname);
 }

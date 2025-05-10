@@ -73,7 +73,7 @@
 <%@ include file="../common/top.jsp"%>
 <div class="container">
 	<h3>회원가입</h3>
-	<form action="${pageContext.request.contextPath}/memberjoinj" method="post">
+	<form action="${pageContext.request.contextPath}/memberjoinj" method="post" encType="multipart/form-data">
 		<table border=1>
 			<tr>
 				<td>아이디</td>
@@ -86,6 +86,14 @@
 			<tr>
 				<td>비밀번호</td>
 				<td><input type ="text" name="pass"></td>
+			</tr>
+			<tr>
+				<td>첨부파일</td>
+				<td><input type="file" name="file" ></input></td>
+			</tr>
+			<tr>
+				<td>첨부파일</td>
+				<td><input type="file" name="file" ></input></td>
 			</tr>
 			<tr>
 				<td colspan=2>

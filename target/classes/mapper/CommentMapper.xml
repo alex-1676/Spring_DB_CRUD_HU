@@ -8,7 +8,7 @@
         <selectKey keyProperty="comment_id" resultType="int" order="BEFORE">
             SELECT bbs_seq.NEXTVAL FROM DUAL
         </selectKey>
-       insert into comments values (#{comment_id},#{userId},#{num},#{content},SYSDATE,0)
+       insert into comments values (#{comment_id},#{user_Id},#{num},#{content},SYSDATE,0)
     </insert>
 <select id="getComments" parameterType="int" resultType="www.silver.VO.CommentVO">
  select * from comments where num = #{num}

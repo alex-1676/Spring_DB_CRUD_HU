@@ -10,4 +10,8 @@ public interface IF_WriteDAO {
     public List<WriteVO> getWriteList();
 
     public WriteVO getWriteByNo(int no);
+
+    public void addWriteImage(String fileNames, int no);
+
+    List<String> getFiles(int no);
 }

@@ -15,6 +15,7 @@ public class WriteDAOImpl implements IF_WriteDAO {
     @Override
     public void addWrite(WriteVO writevo) {
             sqlSession.insert("www.silver.dao.IF_WriteDAO.insertwrite", writevo);
+
     }
 
     @Override
@@ -30,6 +31,16 @@ public class WriteDAOImpl implements IF_WriteDAO {
         WriteVO writeVO = sqlSession.selectOne("www.silver.dao.IF_WriteDAO.getwriteNo", no);
         System.out.println(writeVO.getNo());
         return writeVO;
+    }
+
+    @Override
+    public void addWriteImage(String fileNames, int no) {
+        sqlSession.insert("www.silver.dao.IF_WriteDAO.insertWriteImage", fileNames);
+    }
+
+    @Override
+    public List<String> getFiles(int no) {
+        return sqlSession.selectList("www.silver.dao.IF_WriteDAO.getFiles", no);
     }
 
 }

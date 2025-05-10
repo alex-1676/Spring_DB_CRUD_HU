@@ -74,6 +74,11 @@
         <p><strong>작성일:</strong> ${write.wdate}</p>
         <p><strong>조회수:</strong> ${write.cnt}</p>
         <p><strong>내용:</strong> ${write.body}</p>
+        <p><strong>첨부파일:</strong></p>
+        <c:forEach var="file" items="${files}">
+            <a href="download?filename=${file}">[다운로드]</a>
+            <img src="download?filename=${file}">
+        </c:forEach>
     </div>
 
     <!-- 댓글 입력 폼 -->
@@ -105,7 +110,7 @@
                 <c:otherwise>
                     <c:forEach var="comment" items="${commentList}">
                         <div class="comment-item">
-                            <p><strong>작성자:</strong> ${comment.userId}</p>
+                            <p><strong>작성자:</strong> ${comment.user_Id}</p>
                             <p><strong>내용:</strong> ${comment.content}</p>
                             <p><strong>작성일:</strong> ${comment.cdate}</p>
                             <p><strong>좋아요:</strong> ${comment.good}</p>

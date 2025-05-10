@@ -5,7 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="www.silver.dao.IF_MemberDAO">
 	<insert id="insertone" parameterType="www.silver.VO.MemberVO">
-		insert into member values(#{id} ,#{pass}, #{name})
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			SELECT member_seq.currval FROM dual
+		</selectKey>
+		insert into member values(#{id} ,#{pass}, #{name},member_seq.nextval)
 	</insert>
 	<select id="checkMember" parameterType="String" resultType="String">
 		select id from member where id = #{id}
@@ -15,4 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from member where id = #{id}
 	</select>
 
+	<insert id="member_attach" parameterType="www.silver.VO.FileVO">
+      insert into member_attach values ((select max(no) from member),#{filename},default)
+	</insert>
 </mapper>

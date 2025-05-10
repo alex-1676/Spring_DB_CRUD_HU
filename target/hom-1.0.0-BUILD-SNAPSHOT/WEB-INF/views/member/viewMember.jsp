@@ -29,8 +29,7 @@
     <td>${member.id}</td>
     <td>${member.pass}</td>
     <td>${member.name}</td>
-    <td>${member.addr}</td>
-    <td>${member.tel}</td>
+
    <td> <form action="/member/edit" method="post" style="display: inline;">
         <input type="hidden" name="id" value="${member.id}">
         <input type="submit" value="수정" class="edit-btn">

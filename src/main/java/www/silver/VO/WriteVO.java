@@ -3,6 +3,8 @@ package www.silver.VO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class WriteVO {
@@ -15,5 +17,6 @@ public class WriteVO {
 	private int cnt;
 	private String s_flag;
 //여기서부터
+	
 	
 }

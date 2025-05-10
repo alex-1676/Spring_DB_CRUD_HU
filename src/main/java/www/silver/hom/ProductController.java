@@ -1,21 +1,21 @@
 package www.silver.hom;
 
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import www.silver.VO.ProductVO;
 import www.silver.VO.SearchVO;
+import www.silver.service.IF_CommentService;
 import www.silver.service.IF_ProductService;
 
-import javax.inject.Inject;
 import java.util.List;
-
+@RequiredArgsConstructor
 @Controller
 public class ProductController {
-    @Inject
-    IF_ProductService productService;
+
+   private final IF_ProductService productService;
 
 
     @GetMapping("start")
@@ -30,21 +30,30 @@ public class ProductController {
     }
 
     @GetMapping("getlist")
-    public String getlist(@RequestParam("name") String name, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public ResponseEntity<ProductVO> getlist(@RequestParam("name") String name) {
+        System.out.println("checkdddddddddd - Start");
         ProductVO productVO = productService.getProductById(name);
-        redirectAttributes.addFlashAttribute("product", productVO);
-        return "redirect:/addsearch";
-    }
-
-    @GetMapping("addsearch")
-    public String addsearch(@ModelAttribute("product") ProductVO productVO, Model model) {
-        model.addAttribute("product", productVO);
+        if (productVO == null) {
+            System.out.println("Product not found for name: " + name);
+            return ResponseEntity.notFound().build();
+        }
         SearchVO searchVO = new SearchVO();
         searchVO.setSearchName(productVO.getProductName());
-
         productService.addsearch(searchVO);
-        return "product";
+        System.out.println("checkdddddddddd - End");
+        return ResponseEntity.ok(productVO);
     }
+
+//    @GetMapping("addsearch")
+//    @ResponseBody
+//    public ProductVO addsearch(@ModelAttribute("product") ProductVO productVO, Model model) {
+//        model.addAttribute("product", productVO);
+//
+//
+//
+//        return productVO;
+//    }
 
     @GetMapping("getSearchHistory")
     @ResponseBody
