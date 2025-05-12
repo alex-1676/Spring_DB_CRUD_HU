@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import www.silver.VO.PageVO;
 import www.silver.VO.WriteVO;
 import www.silver.VO.WriteVO_File;
 import www.silver.service.IF_WriteService;
@@ -37,9 +38,9 @@ public class WriteController {
     }
 
     @PostMapping("saveWrite")
-    public String saveWrite(@ModelAttribute WriteVO writeVO , MultipartFile[]file) throws IOException {
+    public String saveWrite(@ModelAttribute WriteVO writeVO , MultipartFile[]file ) throws IOException {
         String[] filename = fileDataUtil.fileUpload(file);
-        List<String> fileNames = Arrays.asList(filename);
+        List<String> fileNames = filename.length > 0 ? Arrays.asList(filename) : null;
 
         writeService.addWrite(writeVO,fileNames);
 
@@ -48,10 +49,18 @@ public class WriteController {
     }
 
     @GetMapping("board")
-    public  String board(Model model){
 
-        List<WriteVO> writeVOList = writeService.getWriteList();
+    public  String board(@RequestParam(defaultValue = "1")int page, Model model){
+        PageVO pageVO = new PageVO();
+        pageVO.setPage(page);
+//        pageVO.setPerPageNum(3);
+        int allPage = writeService.allCount();
+        pageVO.setTotalCount(allPage);
+        pageVO.calcPage();
+        List<WriteVO> writeVOList = writeService.getWriteList(pageVO);
         model.addAttribute("writeList",writeVOList);
+        model.addAttribute("pageVO",pageVO);
+        System.out.println("12121212121221=======  "+writeVOList.size() );
         return "write/board";
     }
     @GetMapping("chboard")

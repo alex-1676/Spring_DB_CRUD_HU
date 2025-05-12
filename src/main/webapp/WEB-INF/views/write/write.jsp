@@ -99,7 +99,7 @@
             </tr>
             <tr>
                 <td>첨부파일</td>
-                <td><input type="file" name="file" multiple="multiple"></input></td>
+                <td><input type="file" name="file" multiple="multiple" ></input></td>
             </tr>
             <tr>
                 <td colspan="2">

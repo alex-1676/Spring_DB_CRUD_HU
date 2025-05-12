@@ -3,10 +3,10 @@ package www.silver.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import www.silver.VO.PageVO;
 import www.silver.VO.WriteVO;
 import www.silver.dao.IF_WriteDAO;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,8 +36,8 @@ public class WriteServiceImpl implements IF_WriteService {
     }
 
     @Override
-    public List<WriteVO> getWriteList() {
-        List<WriteVO> writeVOList = writeDAO.getWriteList();
+    public List<WriteVO> getWriteList(PageVO pageVO) {
+        List<WriteVO> writeVOList = writeDAO.getWriteList(pageVO);
         return writeVOList;
     }
 
@@ -49,5 +49,10 @@ public class WriteServiceImpl implements IF_WriteService {
     @Override
     public List<String> getFiles(int no) {
         return writeDAO.getFiles(no);
+    }
+
+    @Override
+    public int allCount() {
+       return writeDAO.allCount();
     }
 }

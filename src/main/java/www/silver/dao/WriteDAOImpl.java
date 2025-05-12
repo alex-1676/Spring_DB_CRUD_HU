@@ -2,6 +2,7 @@ package www.silver.dao;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import www.silver.VO.PageVO;
 import www.silver.VO.WriteVO;
 
 import javax.inject.Inject;
@@ -19,8 +20,8 @@ public class WriteDAOImpl implements IF_WriteDAO {
     }
 
     @Override
-    public List<WriteVO> getWriteList() {
-       List<WriteVO> writeVOList= sqlSession.selectList("www.silver.dao.IF_WriteDAO.getwritelist");
+    public List<WriteVO> getWriteList(PageVO pageVO) {
+       List<WriteVO> writeVOList= sqlSession.selectList("www.silver.dao.IF_WriteDAO.getwritelist",pageVO);
         return writeVOList;
     }
 
@@ -41,6 +42,11 @@ public class WriteDAOImpl implements IF_WriteDAO {
     @Override
     public List<String> getFiles(int no) {
         return sqlSession.selectList("www.silver.dao.IF_WriteDAO.getFiles", no);
+    }
+
+    @Override
+    public int allCount() {
+        return sqlSession.selectOne("www.silver.dao.IF_WriteDAO.allCount");
     }
 
 }

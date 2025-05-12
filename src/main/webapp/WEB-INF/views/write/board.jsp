@@ -28,7 +28,7 @@
         }
         .btn-write {
             float: right;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
         .clickable-row {
             cursor: pointer;
@@ -88,8 +88,39 @@
         </tbody>
     </table>
 
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <c:if test="${pageVO.prev}">
+                <li class="page-item">
+                    <a class="page-link" href="${pageContext.request.contextPath}/board?page=${pageVO.startPage - 1}" aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
+            </c:if>
+            <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}">
+                <li class="page-item ${pageVO.page == i ? 'active' : ''}">
+                    <a class="page-link" href="${pageContext.request.contextPath}/board?page=${i}">${i}</a>
+                </li>
+            </c:forEach>
+            <c:if test="${pageVO.next}">
+                <li class="page-item">
+                    <a class="page-link" href="${pageContext.request.contextPath}/board?page=${pageVO.endPage + 1}" aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+            </c:if>
+        </ul>
+    </nav>
+
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+<script>
+    window.onload = () => loadPage(1);
+
+async function loadPage(page) {
+
+}
+</script>
