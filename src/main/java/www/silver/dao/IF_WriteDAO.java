@@ -17,4 +17,6 @@ public interface IF_WriteDAO {
     List<String> getFiles(int no);
 
     int allCount();
+
+    void delete(int no);
 }

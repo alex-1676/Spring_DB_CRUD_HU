@@ -73,4 +73,11 @@ public class WriteController {
         redirectAttributes.addFlashAttribute("files", files);
         return "redirect:/allComments";
     }
+
+  
+    @GetMapping("/delete")
+    public String delete(@RequestParam("no")int no){
+        writeService.delete(no);
+        return "redirect:/board";
+    }
 }

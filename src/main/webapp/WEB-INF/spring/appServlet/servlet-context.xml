@@ -31,6 +31,18 @@
 		<beans:constructor-arg value="/tmp"></beans:constructor-arg>  <!--   운용되는 서버 드라이버 -->
 <!--		     <beans:constructor-arg value="C:/Users/hoyoung/Desktop/tmp"></beans:constructor-arg>  로컬드라이버-->
 	</beans:bean>
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"></mapping>
+			<exclude-mapping path="/"/>
+			<beans:ref bean="auth"></beans:ref>
+		</interceptor>
+	</interceptors>
+
+
+	<beans:bean class="www.Intercepter.AuthInterceptor" id="auth">
+
+	</beans:bean>
 	<context:component-scan base-package="www.silver.hom" />
 	<context:component-scan base-package="www.silver.service" />
 	<context:component-scan base-package="www.silver.dao" />

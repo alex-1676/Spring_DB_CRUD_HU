@@ -55,4 +55,9 @@ public class WriteServiceImpl implements IF_WriteService {
     public int allCount() {
        return writeDAO.allCount();
     }
+
+    @Override
+    public void delete(int no) {
+        writeDAO.delete(no);
+    }
 }

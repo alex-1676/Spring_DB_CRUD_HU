@@ -49,4 +49,9 @@ public class WriteDAOImpl implements IF_WriteDAO {
         return sqlSession.selectOne("www.silver.dao.IF_WriteDAO.allCount");
     }
 
+    @Override
+    public void delete(int no) {
+        sqlSession.delete("www.silver.dao.IF_WriteDAO.deleteone", no);
+    }
+
 }

@@ -40,6 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="allCount" resultType="int" >
         select count(*) from write
 </select>
+
+    <delete id="deleteone">
+        delete from write where no = #{no}
+    </delete>
 </mapper>
 
 

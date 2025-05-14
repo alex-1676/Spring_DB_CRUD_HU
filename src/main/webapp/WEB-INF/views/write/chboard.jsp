@@ -68,7 +68,7 @@
 <div class="container">
     <h3>조회글</h3>
     <div class="post-details">
-        <p><strong>번호:</strong> ${write.no}</p>
+        <p><strong>번호:</strong><input type="text" value="${write.no}" readonly> ${write.no}</p>
         <p><strong>제목:</strong> ${write.title}</p>
         <p><strong>작성자:</strong> ${write.name}</p>
         <p><strong>작성일:</strong> ${write.wdate}</p>

@@ -81,6 +81,8 @@
                                 ${write.wdate}
                         </td>
                         <td>${write.cnt}</td>
+                        <td><a href="${pageContext.request.contextPath}/delete?no=${write.no}">수정</a></td>
+                    <td><a href="<c:url value="/delete?no=${write.no}"/>">삭제</a></td>
                     </tr>
                 </c:forEach>
             </c:otherwise>

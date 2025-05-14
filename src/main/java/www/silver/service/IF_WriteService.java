@@ -15,4 +15,6 @@ public interface IF_WriteService {
     List<String> getFiles(int no);
 
     int allCount();
+
+    void delete(int no);
 }
